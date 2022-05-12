@@ -2,7 +2,7 @@ const React = require('react');
 import { Link } from "react-router-dom";
 
 class Nav extends React.Component {
-  render() {
+  render(props) {
     // const navComponents = [];
     // if (true) {
     //   navComponents.push(
@@ -23,6 +23,8 @@ class Nav extends React.Component {
     // }
 
     return (
+      <>
+
       <div className="nav-bar">
         <ul className="nav-items">
           <li ><Link to="/">Home</Link></li>
@@ -32,6 +34,7 @@ class Nav extends React.Component {
           <li ><a href="/logout" >Logout</a></li>
         </ul>
       </div>
+      </>
     )
   }
 }

@@ -23,7 +23,6 @@ export default function BasicMasonry() {
   };
 
   const addFav = (bookDetails, index) => {
-    console.log(bookDetails);
     //title, author, genre, isbn, img_URL 
     const savedDetails = {
         author: bookDetails.author_name[0],
@@ -71,7 +70,7 @@ export default function BasicMasonry() {
 
   useEffect(() => {
     makeApiCall("https://openlibrary.org/search.json?title=animal+farm")
-
+   
   }, []);
 
   return (
@@ -87,7 +86,6 @@ export default function BasicMasonry() {
           />
           <input type="submit" value="search" onClick={handleSearch} />
         </form>
-        {/* <div className="result-box">table</div> */}
       </div>
       <CssBaseline />
       <Container

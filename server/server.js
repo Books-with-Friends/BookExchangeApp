@@ -2,7 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const cookieController = require('./controllers/cookieController')
+const dbController = require('./controllers/dbController.js')
 //oauth dependancies
 require('./auth/auth.js');
 const session = require('express-session')
@@ -20,16 +22,15 @@ app.use(passport.session())
 
 //middleware oauth function 
 const authCheck = (req, res, next) => {
-  console.log(req.user, "req.usr")
-  req.user ? next() : res.sendFile(path.join(__dirname, '../public/login.html'));
+  return req.user ? next() : res.sendFile(path.join(__dirname, '../public/login.html'));
 }
 
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-
-app.get('/', authCheck, (req, res) => {
+app.get('/', authCheck, dbController.findUserOrCreate, cookieController.setCookies, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
@@ -41,6 +42,8 @@ app.get('/login', (req, res) => {
 //logout link to end the session and redirect back to root which will reroute back to /login
 app.get('/logout', function(req, res) {
   req.session.destroy(function(e){
+      res.clearCookie('name');
+      res.clearCookie('img');
       req.logout();
       res.redirect('/');
   });
@@ -71,7 +74,7 @@ app.use('/api', apiRouter);
 app.use((req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 
 
-app.use("*", authCheck, (req, res) => {
+app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 

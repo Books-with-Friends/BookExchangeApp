@@ -108,5 +108,15 @@ dbController.findMyBookList = (req, res, next) => {
     });
 }
 
+dbController.findUserOrCreate = (req, res, next) => {
+  const query = `insert into users (email, token) values ($1, $2) on conflict (email) do update set token = $2 returning *;`;
+  const values = [req.user.emails[0].value, req.sessionID];
+
+  db.query(query, values).then(data => {
+    return next();
+  }).catch(err => {
+    return next({log: err, message: "err from dbcontroller findOneOrCreate"})
+  })
+}
 
 module.exports = dbController;

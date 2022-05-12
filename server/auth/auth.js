@@ -9,15 +9,17 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log(request.sessionID, "requestt==============================")
-    console.log(accessToken, "accessToken============================")
-    console.log(refreshToken, "refreshToken=======================")
-    console.log(profile, "profile=========================")
-    console.log(done, "done")
+    // console.log(request.sessionID, "requestt==============================")
+    // console.log(accessToken, "accessToken============================")
+    // console.log(refreshToken, "refreshToken=======================")
+    // console.log(profile, "profile=========================")
+    // console.log(done, "done")
     return done(null, profile)
     // User.findOrCreate({ googleId: profile.id }, function (err, user) {
     //   return cb(err, user);
     // });
+
+    //insert into users (email, token) values ('ken@aol.com', '123245') on conflict (email) do update set token = '123' returning *;
   }
 ));
 
