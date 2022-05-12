@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const PORT = 3000;
@@ -8,6 +9,7 @@ const app = express();
 
 const apiRouter = require('./routes/api');
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({ extended: false }));
