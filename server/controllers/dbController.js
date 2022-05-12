@@ -1,9 +1,31 @@
 const db = require('../models/booksModels');
 const dbController = {};
 
+// a controller to turn the authentication token into a user id for future queries
+dbController.tokenToUser = function(req, res, next){
+  const token = req.cookies.sessionID;
+  const queryArray = [token];
+  const queryString = `
+  SELECT
+    id
+  FROM
+    users
+  WHERE
+    token=$1`;
+  db.query(queryString, queryArray)
+  .then(response => {
+    console.log("USER ID: ", response.rows);
+    res.locals.user_id = response.rows[0].id;
+    next();
+  }).catch(err => {
+    console.log('ERROR: ', err);
+    next(err);
+  });
+}
+
 // return the user's wishlist
 dbController.getWishlist = function (req, res, next){
-  const queryArray = [req.body.user_id];
+  const queryArray = [res.locals.user_id];
   const queryString = 
   `SELECT
     book_id,  title, author, genre, isbn, img_url 
@@ -24,7 +46,7 @@ dbController.getWishlist = function (req, res, next){
 
 // return the user's library
 dbController.getUserLibrary = function (req, res, next){
-  const queryArray = [req.body.user_id];
+  const queryArray = [res.locals.user_id];
   const queryString = 
   `SELECT
     book_id,  title, author, genre, isbn, img_url 
@@ -35,6 +57,7 @@ dbController.getUserLibrary = function (req, res, next){
   db.query(queryString, queryArray)
   .then(response => {
     console.log('HERE IS THE RESULT OF THE USER LIBRARY QUERY: ', response.rows);
+    res.locals.userLibrary = response.rows;
     next();
   }).catch(err => {
     console.log('ERROR: ', err);
@@ -44,7 +67,7 @@ dbController.getUserLibrary = function (req, res, next){
 
 // add a book to the table of books (in preparating for adding it to the wishlist or user_library)
 dbController.addBook = function (req, res, next){
-  const user_id = 2;
+  const user_id = res.locals.user_id;
   const x =  req.body
   const queryArray = [user_id, x.title, x.author, x.genre, x.isbn, x.img_URL];
   console.log('REQ.BODY: ', req.body);
@@ -71,7 +94,7 @@ dbController.addBook = function (req, res, next){
 dbController.addToWishlist = function(req, res, next){
   //const queryArray = [res.locals.user_id, res.locals.book_id];
   //res.locals.newBookID = {id: 23};
-  const queryArray = [2, res.locals.newBookID.id];
+  const queryArray = [res.locals.user_id, res.locals.newBookID.id];
   const queryString = 
   `INSERT INTO
     wishlist(user_id, book_id)
@@ -94,7 +117,7 @@ dbController.addToWishlist = function(req, res, next){
 dbController.addToUserLibrary = function(req, res, next){
   //const queryArray = [res.locals.user_id, res.locals.book_id];
   //res.locals.newBookID = {id: 23};
-  const queryArray = [2, res.locals.newBookID.id];
+  const queryArray = [res.locals.user_id, res.locals.newBookID.id];
   const queryString = 
   `INSERT INTO
     user_library(user_id, book_id)
