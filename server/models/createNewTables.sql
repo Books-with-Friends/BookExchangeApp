@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS books (
   isbn VARCHAR(30),
   title VARCHAR(500) NOT NULL, 
   author VARCHAR(500) NOT NULL,
-  genre VARCHAR(50) NOT NULL,
+  genre VARCHAR(200) NOT NULL,
   img_URL varchar(200),
   user_id INTEGER references users(id) 
 );
