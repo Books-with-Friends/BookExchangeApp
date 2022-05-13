@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cookieController = require('./controllers/cookieController')
@@ -25,6 +26,7 @@ const authCheck = (req, res, next) => {
   return req.user ? next() : res.sendFile(path.join(__dirname, '../public/login.html'));
 }
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({ extended: false }));
