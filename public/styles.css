@@ -186,7 +186,6 @@ input:focus {
 .search-input {
   display: flex;
   flex-direction: column;
-  justify-content: ;
 }
 
 .search-form input {
