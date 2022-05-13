@@ -186,12 +186,11 @@ input:focus {
 .search-input {
   display: flex;
   flex-direction: column;
-  justify-content: ;
 }
 
 .search-form input {
   height: 30px;
-  width: 70%;
+  width: 95%;
   border-radius: 5px;
   border-style: none;
   padding: 3px 15px;
