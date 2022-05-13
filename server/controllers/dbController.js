@@ -69,7 +69,9 @@ dbController.getUserLibrary = function (req, res, next){
 dbController.addBook = function (req, res, next){
   const user_id = res.locals.user_id;
   const x =  req.body
-  const queryArray = [user_id, x.title, x.author, x.genre, x.isbn, x.img_URL];
+  const isbn = x.isbn || '';
+  const img_URL = x.img_URL || '';
+  const queryArray = [user_id, x.title, x.author, x.genre, isbn, img_URL];
   console.log('REQ.BODY: ', req.body);
   console.log('QUERYARRAY: ', queryArray);
   const queryString = 
@@ -94,7 +96,9 @@ dbController.addBook = function (req, res, next){
 dbController.addToWishlist = function(req, res, next){
   //const queryArray = [res.locals.user_id, res.locals.book_id];
   //res.locals.newBookID = {id: 23};
+  console.log("STARTING TO ADD TO WISH LIST");
   const queryArray = [res.locals.user_id, res.locals.newBookID.id];
+  console.log('queryarray: ', queryArray);
   const queryString = 
   `INSERT INTO
     wishlist(user_id, book_id)

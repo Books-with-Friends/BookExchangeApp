@@ -41,6 +41,7 @@ const dbController = require('../controllers/dbController');
 
 //NEW ROUTES
 
+wishlist final version with user authentication
 router.get('/wishlist', dbController.tokenToUser, dbController.getWishlist,(req, res) => {
   return res.status(200).json(res.locals.wishlist);
 });
@@ -49,7 +50,6 @@ router.get('/userLibrary', dbController.tokenToUser, dbController.getWishlist,(r
   return res.status(200).json(res.locals.userLibrary);
 });
 
-
 router.post('wishlist', dbController.tokenToUser, dbController.addToWishlist, (req, res) => {
   return res.status(200).json(res.locals.newBookID);
 });
@@ -57,6 +57,30 @@ router.post('wishlist', dbController.tokenToUser, dbController.addToWishlist, (r
 router.post('userLibrary', dbController.tokenToUser, dbController.addToUserLibrary, (req, res) => {
   return res.status(200).json(res.locals.newBookID);
 });
+
+// router.get('/wishlist', fake, dbController.getWishlist,(req, res) => {
+//   return res.status(200).json(res.locals.wishlist);
+// });
+
+// router.get('/userLibrary', fake, dbController.getWishlist,(req, res) => {
+//   return res.status(200).json(res.locals.userLibrary);
+// });
+
+// router.post('/wishlist', fake, dbController.addBook, dbController.addToWishlist, (req, res) => {
+//   return res.status(200).json(res.locals.newBookID);
+// });
+
+// router.post('/userLibrary', fake, dbController.addBook, dbController.addToUserLibrary, (req, res) => {
+//   return res.status(200).json(res.locals.newBookID);
+// });
+
+
+// function fake(req, res, next){
+//   res.locals.user_id = 3;
+//   console.log('REQ.BODY: ', req.body);
+//   next();
+// }
+
 
 ///temp stuff
 const db = require('../models/booksModels');
