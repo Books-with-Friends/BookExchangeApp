@@ -22,7 +22,7 @@ class AddMyBook extends React.Component {
 
   // getBook function will get book info from server which fetch data from external API
   getBook(num) {
-    e.preventDefault();
+    // e.preventDefault();
     fetch('/api/search', { // route for fetching book data from api
       method: 'POST',
       headers: {
@@ -40,6 +40,7 @@ class AddMyBook extends React.Component {
 
   // addBook function using user input to update state by click ADD THE BOOK button
   addBook() {
+    console.log('addbook invoked');
     // create book object
     let book = {};
     // if isbn is true, send isbn to server and search in api
@@ -48,13 +49,14 @@ class AddMyBook extends React.Component {
     } else {
       book = {
         title: document.getElementById('title').value,
-        auther: document.getElementById('author').value,
+        author: document.getElementById('author').value,
         genre: document.getElementById('genre').value,
       }
       console.log(`user input book data: ${book}`);
     }
     // if wishlist is true, add book to this.state.wishlist, send POST to wishlist endpoint
     if (document.getElementById('addToWishlist').checked) {
+      console.log('going to fetch wishlist');
       fetch('/api/wishlist', {
         method: 'POST',
         headers: {
@@ -64,7 +66,8 @@ class AddMyBook extends React.Component {
         body: JSON.stringify(book)
       })
         .then(response => response.json())
-        .then(data => console.log(`${data} added to your wishlist`));
+        .then(() => console.log(`${book.title} added to your wishlist`))
+        .catch(err => console.log(err));
     }
     // if library is true, add book to this.state.library, send POST to library endpoint
     if (document.getElementById('addToLibrary').checked) {
@@ -77,7 +80,8 @@ class AddMyBook extends React.Component {
         body: JSON.stringify(book)
       })
         .then(response => response.json())
-        .then(data => console.log(`${data} added to your library`));
+        .then(data => alert(`${book} added to your library`))
+        .catch(err => console.log(err));
     }
   }
 
@@ -119,7 +123,7 @@ class AddMyBook extends React.Component {
             <label for='addToLibrary'>I want to add this book to my library</label>
           </div>
           <div>
-            <input type='submit' value='ADD THE BOOK' onclick={this.addBook}/>
+            <input type='submit' value='ADD THE BOOK' onClick={this.addBook}/>
           </div>
         </form>
       </div>
