@@ -33,13 +33,15 @@ class AddMyBook extends React.Component {
     })
       .then(response => response.json())
       .then((data) => {  // data format from api
-        window.location.href = window.location.href;
         return data;
       });
   }
 
   // addBook function using user input to update state by click ADD THE BOOK button
-  addBook() {
+  addBook(e) {
+    console.log(e.target, "sasdddsadsa")
+    e.preventDefault();
+
     console.log('addbook invoked');
     // create book object
     let book = {};
@@ -66,7 +68,7 @@ class AddMyBook extends React.Component {
         body: JSON.stringify(book)
       })
         .then(response => response.json())
-        .then(() => console.log(`${book.title} added to your wishlist`))
+        .then((res) => console.log(`${book.title} added to your wishlist`))
         .catch(err => console.log(err));
     }
     // if library is true, add book to this.state.library, send POST to library endpoint

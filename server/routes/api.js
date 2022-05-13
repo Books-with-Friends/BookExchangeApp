@@ -42,6 +42,7 @@ const dbController = require('../controllers/dbController');
 //NEW ROUTES
 
 router.get('/wishlist', dbController.tokenToUser, dbController.getWishlist,(req, res) => {
+  console.log("hello from router /wishlist")
   return res.status(200).json(res.locals.wishlist);
 });
 
@@ -49,11 +50,11 @@ router.get('/userLibrary', dbController.tokenToUser, dbController.getWishlist,(r
   return res.status(200).json(res.locals.userLibrary);
 });
 
-router.post('wishlist', dbController.tokenToUser, dbController.addToWishlist, (req, res) => {
+router.post('/wishlist', fake, dbController.tokenToUser, dbController.addBook, dbController.addToWishlist, (req, res) => {
   return res.status(200).json(res.locals.newBookID);
 });
 
-router.post('userLibrary', dbController.tokenToUser, dbController.addToUserLibrary, (req, res) => {
+router.post('/userLibrary', dbController.tokenToUser, dbController.addBook, dbController.addToUserLibrary, (req, res) => {
   return res.status(200).json(res.locals.newBookID);
 });
 
@@ -74,11 +75,11 @@ router.post('userLibrary', dbController.tokenToUser, dbController.addToUserLibra
 // });
 
 
-// function fake(req, res, next){
-//   res.locals.user_id = 3;
-//   console.log('REQ.BODY: ', req.body);
-//   next();
-// }
+function fake(req, res, next){
+  //res.locals.user_id = 3;
+  console.log('fake function - REQ.BODY: ', req.body);
+  next();
+}
 
 
 ///temp stuff
