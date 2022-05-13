@@ -41,7 +41,6 @@ const dbController = require('../controllers/dbController');
 
 //NEW ROUTES
 
-wishlist final version with user authentication
 router.get('/wishlist', dbController.tokenToUser, dbController.getWishlist,(req, res) => {
   return res.status(200).json(res.locals.wishlist);
 });
