@@ -116,11 +116,11 @@ class AddMyBook extends React.Component {
           </select><br></br> */}
           <div>
             <input type='checkbox' id='addToWishlist' className='checkbox' value='wishlist'/>
-            <label for='addToWishlist'>I want to add this book to my wishlist</label>
+            <label htmlFor='addToWishlist'>I want to add this book to my wishlist</label>
           </div>
           <div>
             <input type='checkbox' id='addToLibrary' className='checkbox' value='library'/>
-            <label for='addToLibrary'>I want to add this book to my library</label>
+            <label htmlFor='addToLibrary'>I want to add this book to my library</label>
           </div>
           <div>
             <input type='submit' value='ADD THE BOOK' onClick={this.addBook}/>

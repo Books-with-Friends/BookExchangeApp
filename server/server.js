@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const cookieController = require('./controllers/cookieController')
 const dbController = require('./controllers/dbController.js')
 //oauth dependancies

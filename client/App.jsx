@@ -35,7 +35,7 @@ class App extends React.Component {
             <Route path="/search" element={<Search />}></Route>
             <Route path="/" element={<Root />}></Route>
             <Route path="/:id" element={<NotFound />}></Route>
-            <Route path="/addmybook" element={<AddMyBook loggedIn={this.state.loggedIn} userID={this.state.userID} />}></Route>
+            <Route path="/addmybook" element={<AddMyBook />}></Route>
             <Route path="/searchAll" element={<SearchAll />}></Route>
           </Routes>
         </Router>
