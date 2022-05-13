@@ -11,6 +11,7 @@ class Nav extends React.Component {
           <li key={1}><Link to="/mypage">My Books</Link></li>
           <li key={2}><Link to="/search">Find Books</Link></li>
           <li key={3}><Link to="/">Log out</Link></li>
+          <li key={4}><Link to='/addmybook'>Add My Book</Link></li>
         </ul>
       )
     } else {
