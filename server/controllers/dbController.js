@@ -3,7 +3,9 @@ const dbController = {};
 
 // a controller to turn the authentication token into a user id for future queries
 dbController.tokenToUser = function(req, res, next){
-  const token = req.cookies.sessionID;
+  console.log('CHANGING TOKEN TO USERID');
+  const token = req.sessionID;
+  console.log('TOKEN: ', token);
   const queryArray = [token];
   const queryString = `
   SELECT
@@ -83,7 +85,7 @@ dbController.addBook = function (req, res, next){
     id`;
   db.query(queryString, queryArray)
   .then(response => {
-    console.log('CONFIRMATION OF BOOK ENTRY and BOOK_ID: ', response);
+    console.log('CONFIRMATION OF BOOK ENTRY and BOOK_ID: ', response.rows);
     res.locals.newBookID = response.rows[0];
     next();
   }).catch(err => {
@@ -96,7 +98,7 @@ dbController.addBook = function (req, res, next){
 dbController.addToWishlist = function(req, res, next){
   //const queryArray = [res.locals.user_id, res.locals.book_id];
   //res.locals.newBookID = {id: 23};
-  console.log("STARTING TO ADD TO WISH LIST");
+  console.log("STARTING TO ADD TO WISH LIST", res.locals.user_id);
   const queryArray = [res.locals.user_id, res.locals.newBookID.id];
   console.log('queryarray: ', queryArray);
   const queryString = 
@@ -141,6 +143,15 @@ dbController.addToUserLibrary = function(req, res, next){
 // delete a book from the wishlist
 
 
-// delte a book from teh library
+dbController.findUserOrCreate = (req, res, next) => {
+  const query = `insert into users (email, token) values ($1, $2) on conflict (email) do update set token = $2 returning *;`;
+  const values = [req.user.emails[0].value, req.sessionID];
+
+  db.query(query, values).then(data => {
+    return next();
+  }).catch(err => {
+    return next({log: err, message: "err from dbcontroller findOneOrCreate"})
+  })
+}
 
 module.exports = dbController;
